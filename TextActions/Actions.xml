@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<action-recipes>
+	
+	<action category="csscomb.root/csscomb.comb/0">
+		<class>OCShellAction</class>
+		<title>Comb CSS</title>
+		<language-context>css, scss, sass, less</language-context>
+		<when-disabled>hide</when-disabled>
+		<setup>
+			<script>csscomb.js</script>
+			<config>
+				<dict>
+					<key>ACTION</key>
+					<string>comb</string>
+				</dict>
+			</config>			
+			<suppress-errors>true</suppress-errors>
+			<multiple-selections>true</multiple-selections>
+			<single-selection>true</single-selection>
+			<empty-selection>true</empty-selection>
+			<input>selection</input>
+			<alternate>document</alternate>
+			<output>input</output>
+			<error-output>sheet</error-output>
+		</setup>
+	</action>
+	
+	<action category="csscomb.root/csscomb.custom/0">
+		<class>OCShellAction</class>
+		<title>Beautify CSS</title>
+		<language-context>css, scss, sass, less</language-context>
+		<when-disabled>hide</when-disabled>
+		<setup>
+			<script>csscomb.js</script>
+			<config>
+				<dict>
+					<key>ACTION</key>
+					<string>beautify</string>
+				</dict>
+			</config>
+			<suppress-errors>true</suppress-errors>
+			<multiple-selections>true</multiple-selections>
+			<single-selection>true</single-selection>
+			<empty-selection>true</empty-selection>
+			<input>selection</input>
+			<alternate>document</alternate>
+			<output>input</output>
+			<error-output>sheet</error-output>
+		</setup>
+	</action>
+	
+	<action category="csscomb.root/csscomb.custom/1">
+		<class>OCShellAction</class>
+		<title>Sort Properties</title>
+		<language-context>css, scss, sass, less</language-context>
+		<when-disabled>hide</when-disabled>
+		<setup>
+			<script>csscomb.js</script>
+			<config>
+				<dict>
+					<key>ACTION</key>
+					<string>sort</string>
+				</dict>
+			</config>			
+			<suppress-errors>true</suppress-errors>
+			<multiple-selections>true</multiple-selections>
+			<single-selection>true</single-selection>
+			<empty-selection>true</empty-selection>
+			<input>selection</input>
+			<alternate>document</alternate>
+			<output>input</output>
+			<error-output>sheet</error-output>
+		</setup>
+	</action>
+	
+	<action category="csscomb.root/csscomb.settings/0">
+		<class>OCShellAction</class>
+		<title>Custom Config...</title>
+		<language-context>css, scss, sass, less</language-context>
+		<when-disabled>hide</when-disabled>
+		<setup>
+			<script>settings.js</script>
+			<input>nothing</input>
+			<output>nothing</output>
+			<error-output>sheet</error-output>
+		</setup>
+	</action>
+
+</action-recipes>

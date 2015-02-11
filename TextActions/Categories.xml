@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<action-categories>
+	<category id="csscomb.root" show="sub">
+		<title>CSScomb</title>
+	</category>
+	<category id="csscomb.comb" show="inline separated"></category>
+	<category id="csscomb.custom" show="inline separated"></category>
+	<category id="csscomb.settings" show="inline separated"></category>
+</action-categories>

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<action-sort-instructions>
+
+	<sort-template>
+		<selector>csscomb.comb</selector>
+		<selector>csscomb.custom</selector>
+		<selector>csscomb.settings</selector>
+	</sort-template>
+
+</action-sort-instructions>

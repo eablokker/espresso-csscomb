@@ -1,0 +1,8 @@
+{
+	"name": "CSScomb.sugar",
+	"version": "1.0.0",
+	"dependencies": {
+		"csscomb": "3.0.x"
+	},
+	"license": "MIT"
+}
