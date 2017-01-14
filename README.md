@@ -29,5 +29,4 @@ This plugin is mostly a wrapper for the npm module [csscomb](https://www.npmjs.o
 ## Installation
 
 1. Download and extract the zip
-2. Rename folder to CSScomb.sugar
-3. Double-click the CSScomb.sugar file to install
+2. Double-click the CSScomb.sugar file to install
