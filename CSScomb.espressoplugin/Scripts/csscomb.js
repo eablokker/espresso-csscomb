@@ -1,45 +1,74 @@
 #!/usr/bin/env node
 
+var yargs = require('../ScriptLibraries/node_modules/yargs');
 var CSScomb = require('../ScriptLibraries/node_modules/csscomb');
+var spawn = require('child_process').spawn;
+var fs = require('fs');
+
 var comb = new CSScomb();
 
-// Make sure the data is returned as strings:
-process.stdin.setEncoding('utf8');
+var argv = yargs
+	.option('input', {
+		alias: 'i',
+		describe: 'The string of CSS to comb',
+		type: 'string'
+	})
+	.option('processFile', {
+		alias: 'f',
+		describe: 'Process entire editorPath file',
+		default: 'false',
+		type: 'boolean'
+	})
+	.option('action', {
+		alias: 'a',
+		describe: 'Action to take',
+		choices: ['comb', 'beautify', 'sort'],
+		default: 'comb',
+		type: 'string'
+	})
+	.option('tabString', {
+		alias: 't',
+		describe: 'The string to use for indentation',
+		type: 'string'
+	})
+	.option('lineEndingString', {
+		alias: 'l',
+		describe: 'The string to use for line endings',
+		type: 'string'
+	})
+	.option('editorPath', {
+		alias: 'p',
+		describe: 'The absolute path to the current file',
+		type: 'string'
+	})
+	.option('editorDirectoryPath', {
+		alias: 'd',
+		describe: 'The absolute path to the current file\'s parent directory',
+		type: 'string'
+	})
+	.option('editorProjectPath', {
+		alias: 'r',
+		describe: 'The absolute path to the project root directory',
+		type: 'string'
+	})
+	.help('h')
+	.alias('v', 'version')
+	.alias('h', 'help')
+	.argv;
 
-// Read data:
-var input = '';
-process.stdin.on('readable', function() {
-	var chunk = process.stdin.read();
-	if (chunk !== null) {
-		input += chunk;
-	}
-});
+var selection = argv.input || process.env.EDITOR_SELECTION;
+var action = argv.action;
+var tabString = argv.tabString || process.env.EDITOR_TAB_STRING || '\t';
+var lineEndingString = argv.lineEndingString || process.env.EDITOR_LINE_ENDING_STRING || '\n';
 
-// All data is read:
-process.stdin.on('end', function() {
-	combCSS();
-});
+// The absolute path to the file
+var editorPath = argv.editorPath || process.env.EDITOR_PATH;
 
-// Parse the css:
-function combCSS() {
-	// Apply configuration:
-	comb.configure(getConfig());
-	
-	// Parse css:
-	try {
-		var combedCSS = comb.processString(input, {'syntax': getSyntax()});
-	} catch (error) {
-		// On error, output original css:
-		process.stdout.write(input);
-		// Show error message:
-		process.stderr.write(error.message);
-		process.exit(1);
-	}
-	
-	// On success, output parsed css:
-	process.stdout.write(combedCSS);
-	process.exit();	
-}
+// The absolute path to the file's parent directory
+var editorDirectoryPath = argv.editorDirectoryPath || process.env.EDITOR_DIRECTORY_PATH;
+
+// The absolute path to the file's parent directory
+var editorProjectPath = argv.editorProjectPath || process.env.EDITOR_PROJECT_PATH;
 
 // Get configuration settings primarily from custom config file, secondarily from default config:
 function getConfig() {
@@ -47,7 +76,7 @@ function getConfig() {
 	
 	// Use current project's root folder as a starting point.
 	// If no project is active, use current folder as a fallback:
-	var configpath = process.env.EDITOR_PROJECT_PATH || process.env.EDITOR_DIRECTORY_PATH;
+	var configpath = editorProjectPath || editorDirectoryPath;
 	
 	// Search for custom config file recursively up to the home folder:
 	configpath = CSScomb.getCustomConfigPath(configpath + '/.csscomb.json');
@@ -60,12 +89,12 @@ function getConfig() {
 		config = getDefaultConfig();
 	}
 	
-	if (process.env.CONFIG_ACTION == 'beautify') {
+	if (action == 'beautify') {
 		// Remove sort order configuration:
 		delete config['sort-order'];
 	}
 	
-	if (process.env.CONFIG_ACTION == 'sort') {
+	if (action == 'sort') {
 		// Keep only sort order configuration:
 		var configSortOrder = config['sort-order'];
 		config = {};
@@ -93,7 +122,7 @@ function getDefaultConfig() {
 	config['sort-order'][0].unshift('$variable', '$include', '$import');
 	
 	// Add configuration that mimics most of the settings from Espresso:
-	config['block-indent']                    = process.env.EDITOR_TAB_STRING;
+	config['block-indent']                    = tabString;
 	config['strip-spaces']                    = true;
 	config['always-semicolon']                = true;
 	config['vendor-prefix-align']             = true;
@@ -107,22 +136,69 @@ function getDefaultConfig() {
 	config['space-before-combinator']         = ' ';
 	config['space-after-combinator']          = ' ';
 	config['space-before-opening-brace']      = ' ';
-	config['space-after-opening-brace']       = process.env.EDITOR_LINE_ENDING_STRING;
-	config['space-before-closing-brace']      = process.env.EDITOR_LINE_ENDING_STRING;
+	config['space-after-opening-brace']       = lineEndingString;
+	config['space-before-closing-brace']      = lineEndingString;
 	config['space-before-selector-delimiter'] = '';
-	config['space-after-selector-delimiter']  = process.env.EDITOR_LINE_ENDING_STRING;
-	config['space-between-declarations']      = process.env.EDITOR_LINE_ENDING_STRING;
+	config['space-after-selector-delimiter']  = lineEndingString;
+	config['space-between-declarations']      = lineEndingString;
 	
 	return config;
 }
 
 // Get file type extension:
 function getSyntax() {
-	var filename = process.env.EDITOR_FILENAME;
+	var filename = editorPath || '.css';
 	var extension = filename.substr(filename.lastIndexOf('.') + 1);
 	if ((extension == 'css') || (extension == 'scss') || (extension == 'sass') || (extension == 'less')) {
 		return extension;
 	} else {
 		return 'css';
 	}
+}
+
+// Apply configuration:
+comb.configure(getConfig());
+
+if (argv.processFile) {
+	fs.readFile(editorPath, { encoding: 'utf8' }, function(err, data) {
+		if (err && err.path) {
+			errorDialog('Error: no such file or directory\n\n' + err.path);
+			return;
+		} else if (err) {
+			errorDialog(err);
+			return;
+		}
+		processCSS(data);
+	});
+} else {
+	processCSS(selection);
+}
+
+function processCSS(string) {
+	var combedCSS = comb.processString(string, { 'syntax': getSyntax() });
+
+	combedCSS.then(function(result) {
+
+		console.log(result);
+
+	}, function(err) {
+
+		errorDialog(err);
+
+		// Return selected CSS
+		console.log(err.css_);
+	});
+}
+
+function errorDialog(err) {
+	var osascript = spawn(
+		'osascript',
+		['-e', 'tell application "Espresso" to display dialog "' + err + '" buttons "OK" default button 1 with title "CSScomb" with icon caution'],
+		{
+			detached: true,
+			stdio: 'ignore'
+		}
+	);
+
+	osascript.unref();
 }

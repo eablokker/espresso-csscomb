@@ -1,89 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <action-recipes>
-	
-	<action category="csscomb.root/csscomb.comb/0">
-		<class>OCShellAction</class>
+	<action id="com.austenblokker.csscomb.comb" category="actions.csscomb/csscomb.comb/0">
+		<script>csscombAction.js</script>
 		<title>Comb CSS</title>
+
 		<language-context>css, scss, sass, less</language-context>
-		<when-disabled>hide</when-disabled>
+		<syntax-context>language-root, language-root property-list.block, language-root at-rule.at-block, language-root at-rule.at-block > block</syntax-context>
+		<when-disabled>show</when-disabled>
+		<key-equivalent>control shift c</key-equivalent>
+
 		<setup>
-			<script>csscomb.js</script>
-			<config>
-				<dict>
-					<key>ACTION</key>
-					<string>comb</string>
-				</dict>
-			</config>			
-			<suppress-errors>true</suppress-errors>
-			<multiple-selections>true</multiple-selections>
-			<single-selection>true</single-selection>
-			<empty-selection>true</empty-selection>
-			<input>selection</input>
-			<alternate>document</alternate>
-			<output>input</output>
-			<error-output>sheet</error-output>
+			<method>comb</method>
 		</setup>
 	</action>
-	
-	<action category="csscomb.root/csscomb.custom/0">
-		<class>OCShellAction</class>
+
+	<action id="com.austenblokker.csscomb.beautify" category="actions.csscomb/csscomb.custom/0">
+		<script>csscombAction.js</script>
 		<title>Beautify CSS</title>
+
 		<language-context>css, scss, sass, less</language-context>
-		<when-disabled>hide</when-disabled>
+		<syntax-context>language-root, language-root property-list.block, language-root at-rule.at-block, language-root at-rule.at-block > block</syntax-context>
+		<when-disabled>show</when-disabled>
+
 		<setup>
-			<script>csscomb.js</script>
-			<config>
-				<dict>
-					<key>ACTION</key>
-					<string>beautify</string>
-				</dict>
-			</config>
-			<suppress-errors>true</suppress-errors>
-			<multiple-selections>true</multiple-selections>
-			<single-selection>true</single-selection>
-			<empty-selection>true</empty-selection>
-			<input>selection</input>
-			<alternate>document</alternate>
-			<output>input</output>
-			<error-output>sheet</error-output>
+			<method>beautify</method>
 		</setup>
 	</action>
-	
-	<action category="csscomb.root/csscomb.custom/1">
-		<class>OCShellAction</class>
+
+	<action id="com.austenblokker.csscomb.sort" category="actions.csscomb/csscomb.custom/1">
+		<script>csscombAction.js</script>
 		<title>Sort Properties</title>
+
 		<language-context>css, scss, sass, less</language-context>
-		<when-disabled>hide</when-disabled>
+		<syntax-context>language-root, language-root property-list.block, language-root at-rule.at-block, language-root at-rule.at-block > block</syntax-context>
+		<when-disabled>show</when-disabled>
+
 		<setup>
-			<script>csscomb.js</script>
-			<config>
-				<dict>
-					<key>ACTION</key>
-					<string>sort</string>
-				</dict>
-			</config>			
-			<suppress-errors>true</suppress-errors>
-			<multiple-selections>true</multiple-selections>
-			<single-selection>true</single-selection>
-			<empty-selection>true</empty-selection>
-			<input>selection</input>
-			<alternate>document</alternate>
-			<output>input</output>
-			<error-output>sheet</error-output>
+			<method>sort</method>
 		</setup>
 	</action>
-	
-	<action category="csscomb.root/csscomb.settings/0">
-		<class>OCShellAction</class>
-		<title>Custom Config...</title>
-		<language-context>css, scss, sass, less</language-context>
-		<when-disabled>hide</when-disabled>
-		<setup>
-			<script>settings.js</script>
-			<input>nothing</input>
-			<output>nothing</output>
-			<error-output>sheet</error-output>
-		</setup>
+
+	<action id="com.austenblokker.csscomb.settings" category="actions.csscomb/csscomb.settings/0">
+		<script>settingsAction.js</script>
+		<title>Custom Config…</title>
+
+		<!-- <language-context>css, scss, sass, less</language-context> -->
+		<when-disabled>show</when-disabled>
 	</action>
 
 </action-recipes>

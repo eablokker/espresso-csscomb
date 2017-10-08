@@ -1,18 +1,21 @@
-# CSScomb plugin for Espresso
+# CSScomb plugin for Espresso 5
 This is a plugin for MacRabbit's [Espresso](http://macrabbit.com/espresso/) code editor with support for the [CSScomb](https://github.com/csscomb/csscomb.js) plugin.
 
+This plugin is a fork of the original [CSScomb plugin for Espresso v2.1+](https://github.com/olach/espresso-csscomb) by [Ola Christensson](https://github.com/olach). It has been updated to CSScomb version 4.2.0. It no longer requires the ShellActions sugar, because it runs the shell actions through the snippet syntax capability.
+
 ## Requirements
-- [Espresso v2.1+](http://macrabbit.com/espresso/)
-- [ShellActions.sugar v1.2.1+](https://github.com/onecrayon/ShellActions-sugar)
-- [Node.js (v0.10+)](http://nodejs.org/)
+- [Espresso v3+](http://macrabbit.com/espresso/)
+- [Node.js (v6+)](http://nodejs.org/)
+
+Note: No longer requires ShellActions.sugar
 
 ## Features
 This Espresso plugin uses [CSScomb](https://github.com/csscomb/csscomb.js), a coding style formatter for CSS. Its main feature is sorting properties in a specific order. But it can also be used to beautify your style sheet.
 
-In addition to plain CSS, the plugin also supports SCSS, Sass and Less syntax. But until Espresso receive native support for these languages, you'll need to use third-party plugins to enable support in Espresso. There are several plugins hosted on GitHub that extends the language support in Espresso.
+In addition to plain CSS, the plugin also supports SCSS, Sass and Less syntax. Espresso 5 now has native support for these languages.
 
 ## Usage
-Select *Action > CSScomb > Comb CSS* to beautify your style sheet and sort properties. If you don't want to affect the entire style sheet, you can make one or several text selections before performing the action.
+Select *Text > CSScomb > Comb CSS* or choose from the *Actions* dropdown to beautify your style sheet and sort properties. If you don't want to affect the entire style sheet, you can make one or several text selections before performing the action.
 
 It's also possible to only beautify the style sheet without affecting the sort order (and vice versa).
 
@@ -29,4 +32,4 @@ This plugin is mostly a wrapper for the npm module [csscomb](https://www.npmjs.o
 ## Installation
 
 1. Download and extract the zip
-2. Double-click the CSScomb.sugar file to install
+2. Double-click the CSScomb.espressoplugin file to install

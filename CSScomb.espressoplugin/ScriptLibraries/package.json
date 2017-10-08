@@ -1,8 +1,14 @@
 {
-	"name": "CSScomb.sugar",
-	"version": "1.0.0",
-	"dependencies": {
-		"csscomb": "3.0.x"
+	"name": "CSScomb.espressoplugin",
+	"version": "2.0.0",
+	"description": "CSScomb plugin for Espresso 3+",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
 	},
-	"license": "MIT"
+	"author": "Austen Blokker",
+	"license": "MIT",
+	"dependencies": {
+		"csscomb": "^4.2.0",
+		"yargs": "^9.0.1"
+	}
 }
