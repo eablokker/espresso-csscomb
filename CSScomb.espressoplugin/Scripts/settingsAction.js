@@ -2,6 +2,8 @@ action.performWithContext = function(context, outError) {
 
 	var snippetOptions = CETextOptionNormalizeIndentationLevel | CETextOptionNormalizeLineEndingCharacters | CETextOptionNormalizeIndentationCharacters;
 
+	var selections = context.selectedRanges;
+
 	var pluginsPath = '~/Library/Application\\ Support/Espresso/Plug-Ins';
 	var scriptPath = '~/Library/Application\\ Support/Espresso/Plug-Ins/CSScomb.espressoplugin/Scripts/settings.js';
 
@@ -17,5 +19,8 @@ action.performWithContext = function(context, outError) {
 		return '{ nohup osascript -e \'tell application "Espresso" to display dialog "' + message + '" buttons "OK" default button 1 with title "CSScomb" with icon ' + ( icon ? icon : 'note' ) + '\' &> /dev/null& }';
 	}
 
-	return context.insertTextSnippet(snippet, snippetOptions);
+	if (!context.insertTextSnippet(snippet, snippetOptions)) return false;
+
+	context.selectedRanges = selections;
+	return true;
 };

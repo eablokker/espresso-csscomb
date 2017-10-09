@@ -2,6 +2,7 @@ action.performWithContext = function(context, outError) {
 
 	var snippetOptions = CETextOptionNormalizeIndentationLevel | CETextOptionNormalizeLineEndingCharacters | CETextOptionNormalizeIndentationCharacters;
 
+	var selections = context.selectedRanges;
 	var selection = context.selectedRanges[0];
 
 	var tabString = context.textPreferences.tabString;
@@ -20,11 +21,7 @@ action.performWithContext = function(context, outError) {
 	var clearRecipe = new CETextRecipe();
 	var processFile = '';
 	if (selection.length === 0) {
-		var numberOfLines = context.lineStorage.numberOfLines;
-		var lastLineRange = context.lineStorage.lineRangeForLineNumber(numberOfLines);
-		var numberOfCharacters = lastLineRange.location + lastLineRange.length;
-		var documentRange = new Range(0, numberOfCharacters);
-
+		var documentRange = new Range(0, context.string.length);
 		clearRecipe.deleteRange(documentRange);
 
 		processFile = '-f ';
@@ -43,11 +40,6 @@ action.performWithContext = function(context, outError) {
 	if (!context.insertTextSnippet(snippet, snippetOptions)) return false;
 
 	// Scroll back to where cursor was before
-	var goToCursorRecipe = new CETextRecipe();
-	if (selection.length === 0) {
-		var range = new Range(selection.location, 1);
-		var replace = context.substringWithRange(range);
-		goToCursorRecipe.replaceRange(range, replace);
-	}
-	return context.applyTextRecipe(goToCursorRecipe);
+	context.selectedRanges = selections;
+	return true;
 };
