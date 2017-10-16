@@ -182,18 +182,21 @@ function processCSS(string) {
 		console.log(result);
 
 	}, function(err) {
-
-		errorDialog(err);
+		errorDialog(err.toString());
 
 		// Return selected CSS
-		console.log(err.css_);
+		console.log(string);
 	});
+}
+
+function escapeForShell(message) {
+	return message.replace(/\"/g, '\\"');
 }
 
 function errorDialog(err) {
 	var osascript = spawn(
 		'osascript',
-		['-e', 'tell application "Espresso" to display dialog "' + err + '" buttons "OK" default button 1 with title "CSScomb" with icon caution'],
+		['-e', "tell application \"Espresso\" to display dialog \"" + escapeForShell(err) + "\" buttons \"OK\" default button 1 with title \"CSScomb\" with icon caution"],
 		{
 			detached: true,
 			stdio: 'ignore'
