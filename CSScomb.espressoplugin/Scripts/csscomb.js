@@ -190,7 +190,7 @@ function processCSS(string) {
 }
 
 function escapeForShell(message) {
-	return message.replace(/\"/g, '\\"');
+	return message.replace(/"/g, '\\"');
 }
 
 function errorDialog(err) {
