@@ -9,7 +9,7 @@ action.performWithContext = function(context, outError) {
 
 	var nodeMissingMessage = 'CSScomb was not able to find Node.js\n\nPlease install Node on your system and make sure the Node command is available in Terminal\n\nhttps://nodejs.org/en/download/';
 
-	var scriptMissingMessage = "CSScomb was not able to find your Plug-Ins folder\n\nCSScomb.espressoplugin must be installed in\n~/Library/Application Support/Espresso/Plug-Ins/";
+	var scriptMissingMessage = 'CSScomb was not able to find your Plug-Ins folder\n\nCSScomb.espressoplugin must be installed in\n~/Library/Application Support/Espresso/Plug-Ins/';
 
 	var scriptErrorMessage = 'CSScomb Node script failed';
 

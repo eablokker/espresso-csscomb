@@ -5,7 +5,7 @@ This plugin is a fork of the original [CSScomb plugin for Espresso v2.1+](https:
 
 ## Requirements
 - [Espresso v3+](http://macrabbit.com/espresso/)
-- [Node.js (v6+)](http://nodejs.org/)
+- [Node.js v6+](http://nodejs.org/)
 
 Note: No longer requires ShellActions.sugar
 

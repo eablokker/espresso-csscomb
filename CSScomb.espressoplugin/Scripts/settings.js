@@ -25,7 +25,7 @@ if (configpath !== null) {
 message += 'See csscomb.com for available config options.';
 
 function escapeForShell(message) {
-	return message.replace(/\"/g, '\\"');
+	return message.replace(/"/g, '\\"');
 }
 
 var osascript = spawn(

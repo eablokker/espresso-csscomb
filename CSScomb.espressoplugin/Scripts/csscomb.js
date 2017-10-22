@@ -3,7 +3,6 @@
 var yargs = require('../ScriptLibraries/node_modules/yargs');
 var CSScomb = require('../ScriptLibraries/node_modules/csscomb');
 var spawn = require('child_process').spawn;
-var fs = require('fs');
 
 var comb = new CSScomb();
 
@@ -12,12 +11,6 @@ var argv = yargs
 		alias: 'i',
 		describe: 'The string of CSS to comb',
 		type: 'string'
-	})
-	.option('processFile', {
-		alias: 'f',
-		describe: 'Process entire editorPath file',
-		default: 'false',
-		type: 'boolean'
 	})
 	.option('action', {
 		alias: 'a',
@@ -159,20 +152,7 @@ function getSyntax() {
 // Apply configuration:
 comb.configure(getConfig());
 
-if (argv.processFile) {
-	fs.readFile(editorPath, { encoding: 'utf8' }, function(err, data) {
-		if (err && err.path) {
-			errorDialog('Error: no such file or directory\n\n' + err.path);
-			return;
-		} else if (err) {
-			errorDialog(err);
-			return;
-		}
-		processCSS(data);
-	});
-} else {
-	processCSS(selection);
-}
+processCSS(selection);
 
 function processCSS(string) {
 	var combedCSS = comb.processString(string, { 'syntax': getSyntax() });
@@ -190,7 +170,7 @@ function processCSS(string) {
 }
 
 function escapeForShell(message) {
-	return message.replace(/\"/g, '\\"');
+	return message.replace(/"/g, '\\"');
 }
 
 function errorDialog(err) {
