@@ -18,16 +18,20 @@ action.performWithContext = function(context, outError) {
 
 	var scriptErrorMessage = 'CSScomb Node script failed';
 
-	var firstSnippet = new CETextSnippet('`if ! node -v > /dev/null; then echo "$EDITOR_SELECTION"; '+dialog(nodeMissingMessage)+'; elif ! test -d '+pluginsPath+'; then echo "$EDITOR_SELECTION"; '+dialog(scriptMissingMessage, 'caution')+'; else node '+scriptPath+' -a "'+method+'" -t "'+tabString+'" -l "'+lineEndingString+'" || { '+dialog(scriptErrorMessage, 'caution')+'; echo "$EDITOR_SELECTION"; }; fi`');
-
-	var snippet = new CETextSnippet('`node '+scriptPath+' -a "'+method+'" -t "'+tabString+'" -l "'+lineEndingString+'" || { '+dialog(scriptErrorMessage, 'caution')+'; echo "$EDITOR_SELECTION"; }`');
-
 	function dialog(message, icon) {
 		return '{ nohup osascript -e \'tell application "Espresso" to display dialog "' + message + '" buttons "OK" default button 1 with title "CSScomb" with icon ' + ( icon ? icon : 'note' ) + '\' &> /dev/null& }';
 	}
 
 	var newSelections = [];
-	function insertSnippets(selections) {
+	function insertSnippets(selections, options) {
+
+		options = options || {};
+
+		var newlineOverride = options.eofNewline === false ? '-n false' : '';
+
+		var firstSnippet = new CETextSnippet('`if ! node -v > /dev/null; then echo "$EDITOR_SELECTION"; '+dialog(nodeMissingMessage)+'; elif ! test -d '+pluginsPath+'; then echo "$EDITOR_SELECTION"; '+dialog(scriptMissingMessage, 'caution')+'; else node '+scriptPath+' -a "'+method+'" -t "'+tabString+'" -l "'+lineEndingString+'" '+newlineOverride+' || { '+dialog(scriptErrorMessage, 'caution')+'; echo "$EDITOR_SELECTION"; }; fi`');
+
+		var snippet = new CETextSnippet('`node '+scriptPath+' -a "'+method+'" -t "'+tabString+'" -l "'+lineEndingString+'" '+newlineOverride+' || { '+dialog(scriptErrorMessage, 'caution')+'; echo "$EDITOR_SELECTION"; }`');
 		
 		var insertedOffset = 0;
 		var insertSnippets = selections.every(function(sel, index, array) {
@@ -59,7 +63,7 @@ action.performWithContext = function(context, outError) {
 		context.selectedRanges = [selection];
 		return true;
 	} else {
-		if (!insertSnippets(context.selectedRanges)) return false;
+		if (!insertSnippets(context.selectedRanges, { eofNewline: false })) return false;
 		context.selectedRanges = newSelections;
 		return true;
 	}

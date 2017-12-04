@@ -29,6 +29,12 @@ var argv = yargs
 		describe: 'The string to use for line endings',
 		type: 'string'
 	})
+	.option('eofNewline', {
+		alias: 'n',
+		describe: 'Whether to add a new line at end of combed string',
+		type: 'boolean',
+		default: undefined
+	})
 	.option('editorPath', {
 		alias: 'p',
 		describe: 'The absolute path to the current file',
@@ -53,6 +59,7 @@ var selection = argv.input || process.env.EDITOR_SELECTION;
 var action = argv.action;
 var tabString = argv.tabString || process.env.EDITOR_TAB_STRING || '\t';
 var lineEndingString = argv.lineEndingString || process.env.EDITOR_LINE_ENDING_STRING || '\n';
+var eofNewline = argv.eofNewline;
 
 // The absolute path to the file
 var editorPath = argv.editorPath || process.env.EDITOR_PATH;
@@ -92,6 +99,13 @@ function getConfig() {
 		var configSortOrder = config['sort-order'];
 		config = {};
 		config['sort-order'] = configSortOrder;
+	}
+
+	// Allow setting eof-newline option from command line
+	if (eofNewline === false) {
+		config['eof-newline'] = undefined;
+	} else if (eofNewline === true) {
+		config['eof-newline'] = true;
 	}
 	
 	return config;
