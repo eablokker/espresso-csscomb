@@ -1,6 +1,6 @@
 {
 	"name": "CSScomb.espressoplugin",
-	"version": "2.0.4",
+	"version": "2.1.0",
 	"description": "CSScomb plugin for Espresso 3+",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
@@ -9,6 +9,6 @@
 	"license": "MIT",
 	"dependencies": {
 		"csscomb": "^4.2.0",
-		"yargs": "^9.0.1"
+		"yargs": "^12.0.5"
 	}
 }
