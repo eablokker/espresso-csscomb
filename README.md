@@ -1,13 +1,11 @@
 # CSScomb plugin for Espresso 5
 This is a plugin for MacRabbit's [Espresso](http://macrabbit.com/espresso/) code editor with support for the [CSScomb](https://github.com/csscomb/csscomb.js) plugin.
 
-This plugin is a fork of the original [CSScomb plugin for Espresso v2.1+](https://github.com/olach/espresso-csscomb) by [Ola Christensson](https://github.com/olach). It has been updated to CSScomb version 4.2.0. It no longer requires the ShellActions sugar, because it runs the shell actions through the snippet syntax capability.
+This plugin is a fork of the original [CSScomb plugin for Espresso v2.1+](https://github.com/olach/espresso-csscomb) by [Ola Christensson](https://github.com/olach). It has been updated to CSScomb version 4.3.0.
 
 ## Requirements
 - [Espresso v3+](http://macrabbit.com/espresso/)
 - [Node.js v6+](http://nodejs.org/)
-
-Note: No longer requires ShellActions.sugar
 
 ## Features
 This Espresso plugin uses [CSScomb](https://github.com/csscomb/csscomb.js), a coding style formatter for CSS. Its main feature is sorting properties in a specific order. But it can also be used to beautify your style sheet.
@@ -27,7 +25,7 @@ To use your own custom configuration, you'll need to create a config file named 
 Instructions for creating this config file can be found on [csscomb.com](http://csscomb.com).
 
 ## Updates
-This plugin is mostly a wrapper for the npm module [csscomb](https://www.npmjs.org/package/csscomb). That means that you can easily update the bundled csscomb package yourself if there is a new version available. The package is found in the folder *ScriptLibraries* in this plugin. I will of course try to keep this plugin updated myself.
+This plugin is a wrapper for the npm module [csscomb](https://www.npmjs.org/package/csscomb). That means that you can update the bundled csscomb package yourself if there is a new version available. The package is found in the folder *ScriptLibraries* in this plugin. I will try to keep this plugin updated myself.
 
 ## Installation
 
